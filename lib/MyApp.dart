@@ -1,13 +1,12 @@
 // StatelessWidget -> update User Interface
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class MyApp extends StatefulWidget {
   // init state
-  String name;
-  int age;
   // contructor
-  MyApp({required this.name, required this.age});
+  MyApp({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -69,6 +68,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     if (kDebugMode) {
       print("In File: MyApp.dart, Line: 38 ${'2 BUILD'} ");
     }
+    // Create datetime
+    DateTime now = new DateTime(2021, 12, 30);
+
     // ignore: todo
     // TODO: implement build
     return MaterialApp(
@@ -98,15 +100,17 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
                 ),
               ),
               Text(
-                'Person A: ${widget.name} ${widget.age}',
-                style: const TextStyle(fontSize: 20),
-                textDirection: TextDirection.ltr,
-              ),
-              Text(
                 _email,
                 style: const TextStyle(fontSize: 20),
-                textDirection: TextDirection.ltr,
-              )
+              ),
+              Text(
+                "Date ${DateFormat.yMd().format(now)}",
+                style: const TextStyle(fontSize: 20),
+              ),
+              Text(
+                "Number Format ${NumberFormat("###.0#", "en_US").format(12.0)}",
+                style: const TextStyle(fontSize: 20),
+              ),
             ],
           ),
         ),
