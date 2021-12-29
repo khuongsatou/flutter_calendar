@@ -16,7 +16,7 @@ class MyApp extends StatefulWidget {
   }
 }
 
-class _MyAppState extends State<MyApp> {
+class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   late String _email = "";
 
   final edtEmailController = TextEditingController();
@@ -25,19 +25,43 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     // TODO: implement initState
+    super.initState();
+    // Đăng ký event
+    WidgetsBinding.instance?.addObserver(this);
     if (kDebugMode) {
       print("In File: MyApp.dart, Line: 27 ${'1 START STATE'} ");
     }
-    super.initState();
+  }
+
+  // Check background and foreground
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    // TODO: implement didChangeAppLifecycleState
+    super.didChangeAppLifecycleState(state);
+
+    if (state == AppLifecycleState.paused) {
+      if (kDebugMode) {
+        print("In File: MyApp.dart, Line: 41 ${'Background mode'} ");
+      }
+    } else if (state == AppLifecycleState.resumed) {
+      if (kDebugMode) {
+        print("In File: MyApp.dart, Line: 45 ${'Foreground mode'} ");
+      }
+    }
   }
 
   @override
   void dispose() {
     // TODO: implement dispose
+    super.dispose();
     if (kDebugMode) {
       print("In File: MyApp.dart, Line: 38 ${'END Dispose STATE'} ");
     }
-    super.dispose();
+    // Clean event
+    WidgetsBinding.instance?.removeObserver(this);
+
+    //clean controller
+    edtEmailController.dispose();
   }
 
   @override
