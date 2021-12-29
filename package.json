@@ -4,6 +4,7 @@
     "private": true,
     "scripts": {
         "run":"flutter run",
-        "check_devices":"flutter devices"
+        "check_devices":"flutter devices",
+        "flutter_test":"flutter test"
     }
 }
