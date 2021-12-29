@@ -1,0 +1,11 @@
+{
+  "printer":{
+    "prefix": "!p",
+    "body": [
+	  "if (kDebugMode) {",
+      "	 print(\"In File: $TM_FILENAME, Line: $TM_LINE_NUMBER ${} \");",
+	  "}"
+    ],
+    "description": "Creates print statement for Dart"
+  }
+}
