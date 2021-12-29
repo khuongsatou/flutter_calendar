@@ -1,4 +1,5 @@
 // StatelessWidget -> update User Interface
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class MyApp extends StatefulWidget {
@@ -20,8 +21,30 @@ class _MyAppState extends State<MyApp> {
 
   final edtEmailController = TextEditingController();
 
+  // Vòng đời.
+  @override
+  void initState() {
+    // TODO: implement initState
+    if (kDebugMode) {
+      print("In File: MyApp.dart, Line: 27 ${'1 START STATE'} ");
+    }
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    if (kDebugMode) {
+      print("In File: MyApp.dart, Line: 38 ${'END Dispose STATE'} ");
+    }
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (kDebugMode) {
+      print("In File: MyApp.dart, Line: 38 ${'2 BUILD'} ");
+    }
     // ignore: todo
     // TODO: implement build
     return MaterialApp(
@@ -38,6 +61,10 @@ class _MyAppState extends State<MyApp> {
                   controller: edtEmailController,
                   onChanged: (text) {
                     setState(() {
+                      if (kDebugMode) {
+                        print(
+                            "In File: MyApp.dart, Line: 65 ${'3 SET EMAIL'} ");
+                      }
                       _email = text;
                     });
                   },
