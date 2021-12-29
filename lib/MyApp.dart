@@ -16,9 +16,16 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
-  late String _email = "";
+  late String _content = "";
+  late double _amount = 0;
 
-  final edtEmailController = TextEditingController();
+  // final GlobalKey<ScaffoldMessengerState> _scaffoldMessengerKey =
+  //     new GlobalKey<ScaffoldMessengerState>();
+  final GlobalKey<ScaffoldMessengerState> rootScaffoldMessengerKey =
+      GlobalKey<ScaffoldMessengerState>();
+
+  final _contentController = TextEditingController();
+  final _amountController = TextEditingController();
 
   // Vòng đời.
   @override
@@ -60,7 +67,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     WidgetsBinding.instance?.removeObserver(this);
 
     //clean controller
-    edtEmailController.dispose();
+    _contentController.dispose();
   }
 
   @override
@@ -74,44 +81,80 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     // ignore: todo
     // TODO: implement build
     return MaterialApp(
+      scaffoldMessengerKey: rootScaffoldMessengerKey,
       title: "title here",
       home: Scaffold(
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 30, horizontal: 30),
-                child: TextField(
-                  controller: edtEmailController,
-                  onChanged: (text) {
-                    setState(() {
-                      if (kDebugMode) {
-                        print(
-                            "In File: MyApp.dart, Line: 65 ${'3 SET EMAIL'} ");
-                      }
-                      _email = text;
-                    });
-                  },
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: "Enter you email..."),
+        body: SafeArea(
+          minimum: const EdgeInsets.only(left: 20, right: 20),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 30, horizontal: 30),
+                  child: TextField(
+                    controller: _contentController,
+                    onChanged: (text) {
+                      setState(() {
+                        if (kDebugMode) {
+                          print(
+                              "In File: MyApp.dart, Line: 65 ${'3 SET EMAIL'} ");
+                        }
+                        _content = text;
+                      });
+                    },
+                    decoration: const InputDecoration(
+                        border: OutlineInputBorder(), labelText: "Content..."),
+                  ),
                 ),
-              ),
-              Text(
-                _email,
-                style: const TextStyle(fontSize: 20),
-              ),
-              Text(
-                "Date ${DateFormat.yMd().format(now)}",
-                style: const TextStyle(fontSize: 20),
-              ),
-              Text(
-                "Number Format ${NumberFormat("###.0#", "en_US").format(12.0)}",
-                style: const TextStyle(fontSize: 20),
-              ),
-            ],
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 30, horizontal: 30),
+                  child: TextField(
+                    controller: _amountController,
+                    onChanged: (text) {
+                      setState(() {
+                        if (kDebugMode) {
+                          print(
+                              "In File: MyApp.dart, Line: 65 ${'3 SET AMOUNT'} ");
+                        }
+                        _amount = double.tryParse(text) ?? 0;
+                      });
+                    },
+                    decoration: const InputDecoration(
+                        border: OutlineInputBorder(), labelText: "Amount..."),
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {
+                    // _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text("abc")),)
+                    // ScaffoldMessenger.of(context).showSnackBar(
+                    //   SnackBar(
+                    //     content: const Text('snack'),
+                    //     duration: const Duration(seconds: 1),
+                    //     action: SnackBarAction(
+                    //       label: 'ACTION',
+                    //       onPressed: () {},
+                    //     ),
+                    //   ),
+                    // );
+                    rootScaffoldMessengerKey.currentState?.showSnackBar(
+                      SnackBar(
+                        content: Text(
+                            'Content ${this._content} Amount ${this._amount}'),
+                        duration: const Duration(seconds: 1),
+                        action: SnackBarAction(
+                          label: 'ACTION',
+                          onPressed: () {},
+                        ),
+                      ),
+                    );
+                  },
+                  child: const Text("Press a call"),
+                )
+              ],
+            ),
           ),
         ),
       ),
