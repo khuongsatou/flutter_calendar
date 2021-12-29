@@ -18,6 +18,15 @@ class Car {
   // Function Event
   void doSomeThing() {
     this.handleEvent();
+
+    // Only call in class
+    this._doSomeThingAccess();
+  }
+
+  // access Private
+  void _doSomeThingAccess() {
+    // ignore: avoid_print
+    print("Private granted");
   }
 
   @override

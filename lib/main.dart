@@ -9,6 +9,8 @@ void main() {
     print("Set handle Event later");
   };
   mycar.doSomeThing();
+  // denial
+  // mycar._doSomeThingAccess();
   // ignore: avoid_print
   print(mycar);
   runApp(Center(
