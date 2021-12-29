@@ -1,0 +1,8 @@
+{
+    "name":"app_calendar",
+    "version": "0.0.1",
+    "private": true,
+    "scripts": {
+        "run":"flutter run"
+    }
+}
