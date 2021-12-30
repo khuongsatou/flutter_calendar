@@ -28,7 +28,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   final _amountController = TextEditingController();
 
   // Init list transaction
-  Transaction _transaction = Transaction(id: 0, content: "", amount: 0.0);
+  Transaction _transaction =
+      Transaction(id: 0, content: "", amount: 0.0, createAt: "");
   // ignore: deprecated_member_use
   final List<Transaction> _listTransactions = [];
 
@@ -75,22 +76,44 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     _contentController.dispose();
   }
 
+  void showSnackBar(text) {
+    rootScaffoldMessengerKey.currentState?.showSnackBar(
+      SnackBar(
+        content: text,
+        duration: const Duration(seconds: 1),
+        action: SnackBarAction(
+          label: 'ACTION',
+          onPressed: () {},
+        ),
+      ),
+    );
+  }
+
   // Validate nội dung không rỗng, không được nhập số 0 vào amount và amount là float
   void _insertTransaction() {
     if (_transaction.content.isEmpty ||
         _transaction.amount == 0.0 ||
         _transaction.amount.isNaN) {
+      showSnackBar(const Text('Form không hợp lệ vui lòng thử lại'));
       return;
     }
 
     setState(() {
       // Thêm vào array
       _transaction.id = _listTransactions.length - 1;
+
+      final DateTime now = DateTime.now();
+      final DateFormat formatter = DateFormat('dd/MM/yyyy');
+      final String formatted = formatter.format(now);
+
+      _transaction.createAt = formatted;
+      // Show snack bar mới thêm.
+      showSnackBar(Text('Item ${_transaction.toString()}'));
       _listTransactions.add(_transaction);
       _listTransactions.sort((a, b) {
         return b.id - a.id;
       });
-      _transaction = Transaction(id: 0, content: "", amount: 0.0);
+      _transaction = Transaction(id: 0, content: "", amount: 0.0, createAt: "");
       // clear controller
       _contentController.text = "";
       _amountController.text = "";
@@ -174,17 +197,6 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
                 ),
                 OutlinedButton(
                   onPressed: () {
-                    rootScaffoldMessengerKey.currentState?.showSnackBar(
-                      SnackBar(
-                        content: Text('Item ${_transaction.toString()}'),
-                        duration: const Duration(seconds: 1),
-                        action: SnackBarAction(
-                          label: 'ACTION',
-                          onPressed: () {},
-                        ),
-                      ),
-                    );
-
                     _insertTransaction();
                   },
                   child: const Text("Press a call"),
