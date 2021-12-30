@@ -1,4 +1,5 @@
 // StatelessWidget -> update User Interface
+import 'package:app_calendar/TransactionList.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -74,6 +75,28 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     _contentController.dispose();
   }
 
+  // Validate nội dung không rỗng, không được nhập số 0 vào amount và amount là float
+  void _insertTransaction() {
+    if (_transaction.content.isEmpty ||
+        _transaction.amount == 0.0 ||
+        _transaction.amount.isNaN) {
+      return;
+    }
+
+    setState(() {
+      // Thêm vào array
+      _transaction.id = _listTransactions.length - 1;
+      _listTransactions.add(_transaction);
+      _listTransactions.sort((a, b) {
+        return b.id - a.id;
+      });
+      _transaction = Transaction(id: 0, content: "", amount: 0.0);
+      // clear controller
+      _contentController.text = "";
+      _amountController.text = "";
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     if (kDebugMode) {
@@ -82,43 +105,32 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     // Create datetime
     // DateTime now = DateTime(2021, 12, 30);
 
-    // Create Function list
-    List<Widget> _buildWidgetList() {
-      return _listTransactions.map((transaction) {
-        return Card(
-          elevation: 10,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-          color: transaction.id % 2 == 0 ? Colors.green[600] : Colors.pink[300],
-          child: ListTile(
-            leading: const Icon(Icons.access_alarm),
-            title: Text(
-              transaction.content,
-              style: const TextStyle(
-                  color: Colors.white, fontWeight: FontWeight.w700),
-            ),
-            subtitle: Text(transaction.amount.toString(),
-                style: const TextStyle(
-                    color: Colors.white, fontWeight: FontWeight.w300)),
-            onTap: () {
-              if (kDebugMode) {
-                print("In File: MyApp.dart, Line: 164 ${'tap_me'} ");
-              }
-            },
-          ),
-        );
-      }).toList();
-    }
-
     // ignore: todo
     // TODO: implement build
     return MaterialApp(
       scaffoldMessengerKey: rootScaffoldMessengerKey,
       title: "title here",
       home: Scaffold(
+        floatingActionButton: FloatingActionButton(
+          tooltip: "Add transaction",
+          onPressed: () {},
+          child: const Icon(Icons.call),
+        ),
+        appBar: AppBar(
+          title: const Text("Manager Order"),
+          actions: [
+            Container(
+              padding: const EdgeInsets.only(right: 50),
+              child: IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.add),
+              ),
+            )
+          ],
+        ),
         body: SafeArea(
           minimum: const EdgeInsets.only(left: 20, right: 20),
-          child: Center(
+          child: SingleChildScrollView(
             child: Column(
               // mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
@@ -160,11 +172,11 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
                         border: OutlineInputBorder(), labelText: "Amount..."),
                   ),
                 ),
-                TextButton(
+                OutlinedButton(
                   onPressed: () {
                     rootScaffoldMessengerKey.currentState?.showSnackBar(
                       SnackBar(
-                        content: Text('Item ${this._transaction.toString()}'),
+                        content: Text('Item ${_transaction.toString()}'),
                         duration: const Duration(seconds: 1),
                         action: SnackBarAction(
                           label: 'ACTION',
@@ -172,28 +184,15 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
                         ),
                       ),
                     );
-                    setState(() {
-                      // Thêm vào array
-                      _transaction.id = _listTransactions.length - 1;
-                      _listTransactions.add(_transaction);
-                      _listTransactions.sort((a, b) {
-                        return b.id - a.id;
-                      });
-                      _transaction =
-                          Transaction(id: 0, content: "", amount: 0.0);
-                      // clear controller
-                      _contentController.text = "";
-                      _amountController.text = "";
-                    });
+
+                    _insertTransaction();
                   },
                   child: const Text("Press a call"),
                 ),
                 Container(
                   padding:
                       const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
-                  child: Column(
-                    children: _buildWidgetList(),
-                  ),
+                  child: TransactionList(listTransactions: _listTransactions),
                 )
               ],
             ),
