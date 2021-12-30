@@ -2,6 +2,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'Transaction.dart';
 
 class MyApp extends StatefulWidget {
   // init state
@@ -19,13 +20,16 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   late String _content = "";
   late double _amount = 0;
 
-  // final GlobalKey<ScaffoldMessengerState> _scaffoldMessengerKey =
-  //     new GlobalKey<ScaffoldMessengerState>();
   final GlobalKey<ScaffoldMessengerState> rootScaffoldMessengerKey =
       GlobalKey<ScaffoldMessengerState>();
 
   final _contentController = TextEditingController();
   final _amountController = TextEditingController();
+
+  // Init list transaction
+  Transaction _transaction = Transaction(id: 0, content: "", amount: 0.0);
+  // ignore: deprecated_member_use
+  final List<Transaction> _listTransactions = [];
 
   // Vòng đời.
   @override
@@ -76,7 +80,35 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       print("In File: MyApp.dart, Line: 38 ${'2 BUILD'} ");
     }
     // Create datetime
-    DateTime now = new DateTime(2021, 12, 30);
+    // DateTime now = DateTime(2021, 12, 30);
+
+    // Create Function list
+    List<Widget> _buildWidgetList() {
+      return _listTransactions.map((transaction) {
+        return Card(
+          elevation: 10,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          color: transaction.id % 2 == 0 ? Colors.green[600] : Colors.pink[300],
+          child: ListTile(
+            leading: const Icon(Icons.access_alarm),
+            title: Text(
+              transaction.content,
+              style: const TextStyle(
+                  color: Colors.white, fontWeight: FontWeight.w700),
+            ),
+            subtitle: Text(transaction.amount.toString(),
+                style: const TextStyle(
+                    color: Colors.white, fontWeight: FontWeight.w300)),
+            onTap: () {
+              if (kDebugMode) {
+                print("In File: MyApp.dart, Line: 164 ${'tap_me'} ");
+              }
+            },
+          ),
+        );
+      }).toList();
+    }
 
     // ignore: todo
     // TODO: implement build
@@ -88,11 +120,11 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
           minimum: const EdgeInsets.only(left: 20, right: 20),
           child: Center(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              // mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Container(
                   padding:
-                      const EdgeInsets.symmetric(vertical: 30, horizontal: 30),
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
                   child: TextField(
                     controller: _contentController,
                     onChanged: (text) {
@@ -101,7 +133,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
                           print(
                               "In File: MyApp.dart, Line: 65 ${'3 SET EMAIL'} ");
                         }
-                        _content = text;
+                        // _content = text;
+                        _transaction.content = text;
                       });
                     },
                     decoration: const InputDecoration(
@@ -110,7 +143,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
                 ),
                 Container(
                   padding:
-                      const EdgeInsets.symmetric(vertical: 30, horizontal: 30),
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
                   child: TextField(
                     controller: _amountController,
                     onChanged: (text) {
@@ -119,7 +152,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
                           print(
                               "In File: MyApp.dart, Line: 65 ${'3 SET AMOUNT'} ");
                         }
-                        _amount = double.tryParse(text) ?? 0;
+                        // _amount = double.tryParse(text) ?? 0;
+                        _transaction.amount = double.tryParse(text) ?? 0;
                       });
                     },
                     decoration: const InputDecoration(
@@ -128,21 +162,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
                 ),
                 TextButton(
                   onPressed: () {
-                    // _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text("abc")),)
-                    // ScaffoldMessenger.of(context).showSnackBar(
-                    //   SnackBar(
-                    //     content: const Text('snack'),
-                    //     duration: const Duration(seconds: 1),
-                    //     action: SnackBarAction(
-                    //       label: 'ACTION',
-                    //       onPressed: () {},
-                    //     ),
-                    //   ),
-                    // );
                     rootScaffoldMessengerKey.currentState?.showSnackBar(
                       SnackBar(
-                        content: Text(
-                            'Content ${this._content} Amount ${this._amount}'),
+                        content: Text('Item ${this._transaction.toString()}'),
                         duration: const Duration(seconds: 1),
                         action: SnackBarAction(
                           label: 'ACTION',
@@ -150,8 +172,28 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
                         ),
                       ),
                     );
+                    setState(() {
+                      // Thêm vào array
+                      _transaction.id = _listTransactions.length - 1;
+                      _listTransactions.add(_transaction);
+                      _listTransactions.sort((a, b) {
+                        return b.id - a.id;
+                      });
+                      _transaction =
+                          Transaction(id: 0, content: "", amount: 0.0);
+                      // clear controller
+                      _contentController.text = "";
+                      _amountController.text = "";
+                    });
                   },
                   child: const Text("Press a call"),
+                ),
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
+                  child: Column(
+                    children: _buildWidgetList(),
+                  ),
                 )
               ],
             ),
