@@ -252,7 +252,10 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
                 onPressed: () {
                   _openModalBottomSheet();
                 },
-                child: const Text("Press open bottom modal"),
+                child: const Text(
+                  "Press open bottom modal",
+                  style: TextStyle(fontFamily: "Licorice-Regular"),
+                ),
               ),
               Container(
                 padding:

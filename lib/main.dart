@@ -5,5 +5,9 @@ void main() {
   runApp(MaterialApp(
     title: "Transaction app",
     home: MyApp(),
+    theme: ThemeData(
+      primarySwatch: Colors.red,
+      // primarySwatch: Color.pink[]
+    ),
   ));
 }
