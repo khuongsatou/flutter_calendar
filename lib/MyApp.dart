@@ -8,7 +8,7 @@ import 'Transaction.dart';
 class MyApp extends StatefulWidget {
   // init state
   // contructor
-  MyApp({Key? key}) : super(key: key);
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -120,6 +120,101 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     });
   }
 
+  void _closeModal() {
+    Navigator.of(context).pop();
+  }
+
+  void _openModalBottomSheet() {
+    showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return Container(
+            child: SingleChildScrollView(
+              child: Column(
+                // mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 10, horizontal: 30),
+                    child: TextField(
+                      controller: _contentController,
+                      onChanged: (text) {
+                        setState(() {
+                          if (kDebugMode) {
+                            print(
+                                "In File: MyApp.dart, Line: 65 ${'3 SET EMAIL'} ");
+                          }
+                          // _content = text;
+                          _transaction.content = text;
+                        });
+                      },
+                      decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: "Content..."),
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 10, horizontal: 30),
+                    child: TextField(
+                      controller: _amountController,
+                      onChanged: (text) {
+                        setState(() {
+                          if (kDebugMode) {
+                            print(
+                                "In File: MyApp.dart, Line: 65 ${'3 SET AMOUNT'} ");
+                          }
+                          // _amount = double.tryParse(text) ?? 0;
+                          _transaction.amount = double.tryParse(text) ?? 0;
+                        });
+                      },
+                      decoration: const InputDecoration(
+                          border: OutlineInputBorder(), labelText: "Amount..."),
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 30, vertical: 10),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: OutlinedButton(
+                            onPressed: () {
+                              _insertTransaction();
+                              _closeModal();
+                            },
+                            child: const Text("OK"),
+                          ),
+                        ),
+                        const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 10)),
+                        Expanded(
+                          flex: 1,
+                          child: OutlinedButton(
+                            onPressed: () {
+                              _closeModal();
+                            },
+                            child: const Text("Cancel"),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  Container(
+                    child: const Padding(
+                      padding: EdgeInsets.only(top: 10.0),
+                    ),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 10, horizontal: 30),
+                  )
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     if (kDebugMode) {
@@ -130,87 +225,42 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
     // ignore: todo
     // TODO: implement build
-    return MaterialApp(
-      scaffoldMessengerKey: rootScaffoldMessengerKey,
-      title: "title here",
-      home: Scaffold(
-        floatingActionButton: FloatingActionButton(
-          tooltip: "Add transaction",
-          onPressed: () {},
-          child: const Icon(Icons.call),
-        ),
-        appBar: AppBar(
-          title: const Text("Manager Order"),
-          actions: [
-            Container(
-              padding: const EdgeInsets.only(right: 50),
-              child: IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.add),
-              ),
-            )
-          ],
-        ),
-        body: SafeArea(
-          minimum: const EdgeInsets.only(left: 20, right: 20),
-          child: SingleChildScrollView(
-            child: Column(
-              // mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
-                  child: TextField(
-                    controller: _contentController,
-                    onChanged: (text) {
-                      setState(() {
-                        if (kDebugMode) {
-                          print(
-                              "In File: MyApp.dart, Line: 65 ${'3 SET EMAIL'} ");
-                        }
-                        // _content = text;
-                        _transaction.content = text;
-                      });
-                    },
-                    decoration: const InputDecoration(
-                        border: OutlineInputBorder(), labelText: "Content..."),
-                  ),
-                ),
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
-                  child: TextField(
-                    controller: _amountController,
-                    onChanged: (text) {
-                      setState(() {
-                        if (kDebugMode) {
-                          print(
-                              "In File: MyApp.dart, Line: 65 ${'3 SET AMOUNT'} ");
-                        }
-                        // _amount = double.tryParse(text) ?? 0;
-                        _transaction.amount = double.tryParse(text) ?? 0;
-                      });
-                    },
-                    decoration: const InputDecoration(
-                        border: OutlineInputBorder(), labelText: "Amount..."),
-                  ),
-                ),
-                OutlinedButton(
-                  onPressed: () {
-                    _insertTransaction();
-                  },
-                  child: const Text("Press a call"),
-                ),
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
-                  child: TransactionList(listTransactions: _listTransactions),
-                )
-              ],
-            ),
-          ),
-        ),
+    return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        tooltip: "Add transaction",
+        onPressed: () {},
+        child: const Icon(Icons.call),
       ),
+      appBar: AppBar(
+        title: const Text("Manager Order"),
+        actions: [
+          Container(
+            padding: const EdgeInsets.only(right: 50),
+            child: IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.add),
+            ),
+          )
+        ],
+      ),
+      body: SafeArea(
+          minimum: const EdgeInsets.only(left: 20, right: 20),
+          child: Column(
+            children: [
+              const Padding(padding: EdgeInsets.all(10.0)),
+              OutlinedButton(
+                onPressed: () {
+                  _openModalBottomSheet();
+                },
+                child: const Text("Press open bottom modal"),
+              ),
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
+                child: TransactionList(listTransactions: _listTransactions),
+              )
+            ],
+          )),
     );
   }
 }
