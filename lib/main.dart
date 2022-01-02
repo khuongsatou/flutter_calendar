@@ -8,10 +8,7 @@ void main() {
   runApp(MaterialApp(
     title: "Transaction app",
     initialRoute: '/',
-    routes: {
-      '/FoodsPage': (content) =>
-          FoodsPage(category: Category(id: 0, content: "", color: Colors.red))
-    },
+    routes: {FoodsPage.routeName: (content) => FoodsPage()},
     home: Scaffold(
         appBar: AppBar(
           title: Text("App Foods"),

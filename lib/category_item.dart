@@ -4,6 +4,7 @@ import 'models/category.dart';
 import 'package:flutter/material.dart';
 
 class CategoryItem extends StatelessWidget {
+  static const String routeName = '/CategoryItem';
   Category category;
 
   CategoryItem({required this.category});
@@ -18,7 +19,7 @@ class CategoryItem extends StatelessWidget {
           // Navigator.of(context).push(MaterialPageRoute(builder: (context) {
           //   return FoodsPage(category: category);
           // }));
-          Navigator.pushNamed(context, '/FoodsPage',
+          Navigator.pushNamed(context, FoodsPage.routeName,
               arguments: {"category": category});
         },
         splashColor: Colors.deepPurple,
