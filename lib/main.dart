@@ -1,5 +1,6 @@
 import 'package:app_calendar/blocs/counter_bloc.dart';
 import 'package:app_calendar/counter_app.dart';
+import 'package:app_calendar/infinite_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -13,9 +14,9 @@ void main() {
       //   create: (context) => CounterBloc(),
       //   child: CounterApp(),
       // ),
-      home: CounterApp(),
+      home: InfiniteList(),
       theme: ThemeData(
-        fontFamily: 'Licorice-Regular',
+        // fontFamily: 'Licorice-Regular',
         primarySwatch: Colors.red,
         // primarySwatch: Color.pink[]
       ),
