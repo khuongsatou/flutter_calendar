@@ -4,9 +4,10 @@ import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:app_calendar/models/comment.dart';
 
-Future<List<Comment>?> getCommentsFromApi(int start, int limit) async {
-  Uri url = Uri.parse("https://jsonplaceholder.typicode.com/comments");
-  List<Comment>? comments = [];
+Future<List<Comment>> getCommentsFromApi(int start, int limit) async {
+  Uri url = Uri.parse(
+      "https://jsonplaceholder.typicode.com/comments?_start=$start&_limit=$limit");
+  List<Comment> comments = [];
   try {
     var response = await http.get(url);
 

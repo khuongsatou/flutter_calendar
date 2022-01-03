@@ -40,7 +40,7 @@ class _InfinitePageState extends State<InfinitePage> {
                 );
               });
         } else {
-          return Text('${snapshot.error}');
+          return Text(snapshot.error != null ? snapshot.error.toString() : "");
         }
       },
     );
