@@ -1,5 +1,4 @@
 import 'package:app_calendar/blocs/counter_bloc.dart';
-import 'package:app_calendar/events/counter_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

@@ -1,11 +1,17 @@
 import 'package:app_calendar/events/counter_event.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:app_calendar/events/counter_event.dart';
+// abstract class CounterEvent {}
+
+// class CounterIncrementPressed extends CounterEvent {}
+
+// class CounterDecrementPressed extends CounterEvent {}
 
 class CounterBloc extends Bloc<CounterEvent, int> {
-  CounterBloc() : super(0);
+  CounterBloc() : super(0) {
+    // on<CounterIncrementPressed>((event, emit) => emit(state + 1));
+    // on<CounterDecrementPressed>((event, emit) => emit(state - 1));
+  }
 
   // emit -> action.
   // state -> state current
