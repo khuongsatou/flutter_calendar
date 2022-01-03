@@ -1,20 +1,17 @@
-import 'package:app_calendar/counter_app.dart';
-import 'package:app_calendar/counter_page.dart';
-import 'package:app_calendar/fake_data.dart';
-import 'package:app_calendar/foods_page.dart';
-import 'package:app_calendar/models/category.dart';
+import 'package:app_calendar/blocs/counter_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'categories_page.dart';
-import 'detail_food_page.dart';
+import 'counter_page_2.dart';
 
 void main() {
   runApp(
     MaterialApp(
       title: "Transaction app",
-      initialRoute: '/',
-      routes: {FoodsPage.routeName: (content) => FoodsPage()},
-      home: CounterApp(),
+      home: BlocProvider(
+        create: (context) => CounterBloc(),
+        child: CounterPage2(),
+      ),
       theme: ThemeData(
         fontFamily: 'Licorice-Regular',
         primarySwatch: Colors.red,
