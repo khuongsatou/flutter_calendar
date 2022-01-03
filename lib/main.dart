@@ -1,3 +1,5 @@
+import 'package:app_calendar/counter_app.dart';
+import 'package:app_calendar/counter_page.dart';
 import 'package:app_calendar/fake_data.dart';
 import 'package:app_calendar/foods_page.dart';
 import 'package:app_calendar/models/category.dart';
@@ -12,12 +14,7 @@ void main() {
       title: "Transaction app",
       initialRoute: '/',
       routes: {FoodsPage.routeName: (content) => FoodsPage()},
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text("App Foods"),
-        ),
-        body: DetailFoodPage(food: FAKE_FOOD[0]),
-      ),
+      home: CounterApp(),
       theme: ThemeData(
         fontFamily: 'Licorice-Regular',
         primarySwatch: Colors.red,
