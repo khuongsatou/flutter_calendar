@@ -28,12 +28,7 @@ class _InfiniteList2State extends State<InfiniteList2> {
     _scrollControler.addListener(() {
       final maxScrollExtent = _scrollControler.position.maxScrollExtent;
       final currentScroll = _scrollControler.position.pixels;
-      if (kDebugMode) {
-        print("In File: infinite_list_2.dart, Line: 30 ${maxScrollExtent} ");
-      }
-      if (kDebugMode) {
-        print("In File: infinite_list_2.dart, Line: 34 ${currentScroll} ");
-      }
+
       if (maxScrollExtent - currentScroll <= _scrollThreadhold) {
         context.read<CommentBloc>().add(CommentFetchEvent());
       }

@@ -1,16 +1,38 @@
-# app_calendar
+# Command flutter
+flutter run # run code
 
-A new Flutter project.
+# Tut 1
+- Hằng và biến
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
+# Tut 2
+- State và vòng đời
 
-A few resources to get you started if this is your first Flutter project:
+# Tut 3
+- import lib : dart pub add intl https://pub.dev/packages/intl/install
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+# Tut 4
+- Scaffold update global key update UI 
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+# Tut 5
+- ListView
+
+# Tut 6
+- Expanded 
+- Positioned
+- Stack
+- Navigator
+
+# Tut 7
+- Counter
+- Bloc
+
+# Tut 8
+- Call APi
+
+# Tut 9
+- Loadmore
+- Call API Bloc
+
+

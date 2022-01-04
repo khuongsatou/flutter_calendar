@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "403058243327",
+    "project_id": "bloctest-ee183",
+    "storage_bucket": "bloctest-ee183.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:403058243327:android:e4f79a65cda7080286feca",
+        "android_client_info": {
+          "package_name": "com.example.app_calendar"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "403058243327-7mk6vr6i893q36omuecco17shj0ui58g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAm_s7QbSzBHk0A8oUxdtn5XVDK-B9XE7o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "403058243327-7mk6vr6i893q36omuecco17shj0ui58g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

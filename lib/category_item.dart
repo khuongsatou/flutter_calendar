@@ -16,11 +16,11 @@ class CategoryItem extends StatelessWidget {
       child: InkWell(
         onTap: () {
           print("In File: category_item.dart, Line: 13 ${category.content} ");
-          // Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-          //   return FoodsPage(category: category);
-          // }));
-          Navigator.pushNamed(context, FoodsPage.routeName,
-              arguments: {"category": category});
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+            return FoodsPage(category: category);
+          }));
+          // Navigator.pushNamed(context, FoodsPage.routeName,
+          //     arguments: {"category": category});
         },
         splashColor: Colors.deepPurple,
         child: Container(

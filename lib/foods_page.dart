@@ -35,98 +35,106 @@ class FoodsPage extends StatelessWidget {
             itemCount: foods.length,
             itemBuilder: (context, index) {
               Food food = foods[index];
-              return Container(
-                padding: const EdgeInsets.all(20),
-                child: LayoutBuilder(
-                  builder: (context, constraint) {
-                    return Stack(
-                      clipBehavior: Clip.none,
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(8.0),
-                          clipBehavior: Clip.hardEdge,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              FadeInImage.assetNetwork(
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    constraints: BoxConstraints(maxWidth: 500, maxHeight: 300),
+                    // height: 500,
+                    // width: 300,
+                    child: LayoutBuilder(
+                      builder: (context, constraint) {
+                        return Stack(
+                          clipBehavior: Clip.none,
+                          fit: StackFit.expand,
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(8.0),
+                              clipBehavior: Clip.hardEdge,
+                              child: FadeInImage.assetNetwork(
+                                  fit: BoxFit.cover,
                                   placeholder: 'assets/images/loading.gif',
                                   image: food.urlName),
-                            ],
-                          ),
-                        ),
-                        Positioned(
-                          top: 10,
-                          left: 10,
-                          child: Container(
-                            height: 80.0,
-                            child: Row(
-                              children: [
-                                const Icon(Icons.timer,
-                                    color: Colors.white, size: 25),
-                                Text(
-                                  '${food.duration?.inMinutes} minutes',
-                                  style: const TextStyle(
-                                      fontSize: 22, color: Colors.white),
-                                )
-                              ],
                             ),
-                            padding: const EdgeInsets.all(5),
-                            decoration: BoxDecoration(
-                              color: Colors.black.withOpacity(0.3),
-                              border: Border.all(color: Colors.white, width: 2),
-                              borderRadius: BorderRadius.circular(10.0),
+                            // Positioned(
+                            //   top: 10,
+                            //   left: 10,
+                            //   child: Container(
+                            //     height: 80.0,
+                            //     child: Row(
+                            //       children: [
+                            //         const Icon(Icons.timer,
+                            //             color: Colors.black, size: 25),
+                            //         Text(
+                            //           '${food.duration?.inMinutes} minutes',
+                            //           style: const TextStyle(
+                            //               fontSize: 22, color: Colors.white),
+                            //         )
+                            //       ],
+                            //     ),
+                            //     padding: const EdgeInsets.all(5),
+                            //     decoration: BoxDecoration(
+                            //       color: Colors.black.withOpacity(0.3),
+                            //       border: Border.all(color: Colors.white, width: 2),
+                            //       borderRadius: BorderRadius.circular(10.0),
+                            //     ),
+                            //   ),
+                            // ),
+                            Positioned(
+                              top: 10,
+                              right: 10,
+                              child: Container(
+                                height: 80.0,
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      food.complexity
+                                          .toString()
+                                          .split('.')
+                                          .last,
+                                      style: const TextStyle(
+                                          fontSize: 22, color: Colors.black),
+                                    )
+                                  ],
+                                ),
+                                padding: const EdgeInsets.all(5),
+                                decoration: BoxDecoration(
+                                  color: Colors.black.withOpacity(0.3),
+                                  border:
+                                      Border.all(color: Colors.white, width: 2),
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                        Positioned(
-                          top: 10,
-                          left: 500,
-                          child: Container(
-                            height: 80.0,
-                            child: Row(
-                              children: [
-                                Text(
-                                  food.complexity.toString().split('.').last,
-                                  style: const TextStyle(
-                                      fontSize: 22, color: Colors.white),
-                                )
-                              ],
-                            ),
-                            padding: const EdgeInsets.all(5),
-                            decoration: BoxDecoration(
-                              color: Colors.black.withOpacity(0.3),
-                              border: Border.all(color: Colors.white, width: 2),
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          left: 10,
-                          bottom: 10,
-                          child: Container(
-                            height: 80.0,
-                            child: Row(
-                              children: [
-                                Text(
-                                  '${food.name}',
-                                  style: const TextStyle(
-                                      fontSize: 22, color: Colors.white),
-                                )
-                              ],
-                            ),
-                            padding: const EdgeInsets.all(5),
-                            decoration: BoxDecoration(
-                              color: Colors.black.withOpacity(0.3),
-                              border: Border.all(color: Colors.white, width: 2),
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                          ),
-                        )
-                      ],
-                    );
-                  },
-                ),
+                            Positioned(
+                              left: 10,
+                              bottom: 10,
+                              child: Container(
+                                height: 80.0,
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      '${food.name}',
+                                      style: const TextStyle(
+                                          fontSize: 22, color: Colors.white),
+                                    )
+                                  ],
+                                ),
+                                padding: const EdgeInsets.all(5),
+                                decoration: BoxDecoration(
+                                  color: Colors.black.withOpacity(0.3),
+                                  border:
+                                      Border.all(color: Colors.white, width: 2),
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                              ),
+                            )
+                          ],
+                        );
+                      },
+                    ),
+                  ),
+                ],
               );
 
               // return Card(
